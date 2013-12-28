@@ -55,9 +55,16 @@
 #   $ cmake <PATH_TO_SOURCES>
 #   $ make package
 #   $ make package_source
+#
+# Note: to include the Snappy and Lz4 source tarballs in the archive the
+# following commands have to be run:
+#
+#   $ cmake <PATH_TO_SOURCES>
+#   $ make Snappy-download
+#   $ make package_source
 
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 project(blosc)
 
 # parse the full version numbers from blosc.h
@@ -107,6 +114,11 @@ endif(ENABLE_LZ4HC)
 
 if(ENABLE_SNAPPY)
     find_package(Snappy)
+
+    if(NOT SNAPPY_FOUND)
+        include(SnappyExternalProject)
+    endif(NOT SNAPPY_FOUND)
+
     if(SNAPPY_FOUND)
         set(HAVE_SNAPPY TRUE)
     endif(SNAPPY_FOUND)

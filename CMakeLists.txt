@@ -116,7 +116,7 @@ if(ENABLE_SNAPPY)
     find_package(Snappy)
 
     if(NOT SNAPPY_FOUND)
-        include(SnappyExternalProject)
+        include(SnappyCMakeExternalProject)
     endif(NOT SNAPPY_FOUND)
 
     if(SNAPPY_FOUND)

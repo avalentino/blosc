@@ -60,7 +60,7 @@
 # following commands have to be run:
 #
 #   $ cmake <PATH_TO_SOURCES>
-#   $ make Snappy-download
+#   $ make Snappy-download Lz4-download
 #   $ make package_source
 
 
@@ -98,19 +98,23 @@ option(ENABLE_ZLIB "Enable the zlib compressor." ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-if(ENABLE_LZ4)
+if(ENABLE_LZ4 OR ENABLE_LZ4HC)
     find_package(LZ4)
-    if(LZ4_FOUND)
-        set(HAVE_LZ4 TRUE)
-    endif(LZ4_FOUND)
-endif(ENABLE_LZ4)
 
-if(ENABLE_LZ4HC)
-    find_package(LZ4)
+    if(NOT LZ4_FOUND)
+        include(Lz4ExternalProject)
+    endif(NOT LZ4_FOUND)
+
     if(LZ4_FOUND)
-        set(HAVE_LZ4HC TRUE)
+        if(ENABLE_LZ4)
+            set(HAVE_LZ4 TRUE)
+        endif(ENABLE_LZ4)
+
+        if(ENABLE_LZ4HC)
+            set(HAVE_LZ4HC TRUE)
+        endif(ENABLE_LZ4HC)
     endif(LZ4_FOUND)
-endif(ENABLE_LZ4HC)
+endif(ENABLE_LZ4 OR ENABLE_LZ4HC)
 
 if(ENABLE_SNAPPY)
     find_package(Snappy)
@@ -127,7 +131,9 @@ endif(ENABLE_SNAPPY)
 if(ENABLE_ZLIB)
     # import the ZLIB_ROOT environment variable to help finding the zlib library
     set(ZLIB_ROOT $ENV{ZLIB_ROOT})
+
     find_package( ZLIB )
+
     if ( ZLIB_FOUND )
         set(HAVE_ZLIB TRUE)
     endif ( ZLIB_FOUND )

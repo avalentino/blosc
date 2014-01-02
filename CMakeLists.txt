@@ -41,6 +41,12 @@
 #    DEV: static includes blosc.a and blosc.h
 #    HDF5_FILTER: includes blosc_filter.so
 #    HDF5_FILTER_DEV: includes blosc_filter.h
+#
+# How to generate binary/source packages:
+#
+#   $ cmake <PATH_TO_SOURCES>
+#   $ make package
+#   $ make package_source
 
 
 cmake_minimum_required(VERSION 2.6)

@@ -2,9 +2,14 @@ find_path(SNAPPY_INCLUDE_DIR snappy-c.h)
 
 find_library(SNAPPY_LIBRARY NAMES snappy)
 
-if (SNAPPY_INCLUDE_DIR AND SNAPPY_LIBRARY)
-    set(SNAPPY_FOUND TRUE)
-    message(STATUS "Found SNAPPY library: ${SNAPPY_LIBRARY}")
+# handle the QUIETLY and REQUIRED arguments and set SNAPPY_FOUND to TRUE if
+# all listed variables are TRUE
+include(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SNAPPY
+    REQUIRED_VARS SNAPPY_LIBRARY SNAPPY_INCLUDE_DIR)
+
+if(SNAPPY_FOUND)
+    message(STATUS "Found SNAPPY library: ${SNAPPY_INCLUDE_DIR} ${SNAPPY_LIBRARY}")
 else ()
     message(STATUS "No snappy found.  Using internal sources.")
 endif ()

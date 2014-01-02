@@ -138,17 +138,15 @@ for compiling Blosc with Zlib support do:
    $ gcc -O3 -msse2 -o myprog myprog.c blosc/*.c -lpthread -DHAVE_ZLIB -lz
 
 In the bench/ directory there a couple of Makefile files (one for UNIX
-and the other for MinGW) with more complete building examples, like
-selecting between libraries or internal sources for the compressors.
+and the other for MinGW) with more complete building examples.
 
 Compiling the Blosc library with CMake
 ======================================
 
 Blosc can also be built, tested and installed using CMake_. Although
 this procedure is a bit more invloved than the one described above, it
-is the most general because it allows to integrate compressors either
-from libraries or from internal sources. Hence, serious library
-developers should use this way.
+is the most general because it allows to integrate compressors
+from libraries. Hence, serious library developers should use this way.
 
 The following procedure describes the "out of source" build.
 
@@ -195,13 +193,6 @@ The CMake files in Blosc as configured to automatically detect other
 compressors like LZ4, LZ4HC, Snappy or Zlib, so as long as the libraries
 and the header files for these libraries are accessible, these will be
 used by default.
-
-However, the full sources for LZ4, LZ4HC, Snappy and Zlib have been
-included in Blosc too. So, in general, you should not worry about not
-having (or CMake not finding) the libraries in your system because in
-this case, their sources will be automaticall compiled for you. That
-effectively means that you can be confident in having a complete support
-for all the supported compression libraries in all supported platforms.
 
 *Note on Zlib*: the library should be easily found on UNIX systems,
 although on Windows, you can help CMake to find it by setting the

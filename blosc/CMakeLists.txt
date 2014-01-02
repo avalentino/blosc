@@ -23,67 +23,21 @@ else(WIN32)
     set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 endif(WIN32)
 
-set(INTERNAL_LIBS ${CMAKE_SOURCE_DIR}/internal-complibs)
-
 # compressors
-if (ENABLE_LZ4 OR ENABLE_LZ4HC)
-    if (LZ4_FOUND)
-        include_directories( ${LZ4_INCLUDE_DIR} )
-        set(LIBS ${LIBS} ${LZ4_LIBRARY})
-    else(LZ4_FOUND)
-        set(LZ4_LOCAL_DIR ${INTERNAL_LIBS}/lz4-r110)
-        include_directories( ${LZ4_LOCAL_DIR} )
-        if (ENABLE_LZ4)
-            set(SOURCES ${SOURCES} ${LZ4_LOCAL_DIR}/lz4.c)
-        endif (ENABLE_LZ4)
-        if (ENABLE_LZ4HC)
-            set(SOURCES ${SOURCES} ${LZ4_LOCAL_DIR}/lz4hc.c)
-        endif (ENABLE_LZ4HC)
-    endif(LZ4_FOUND)
-endif (ENABLE_LZ4 OR ENABLE_LZ4HC)
+if (HAVE_LZ4 OR HAVE_LZ4HC)
+    include_directories( ${LZ4_INCLUDE_DIR} )
+    set(LIBS ${LIBS} ${LZ4_LIBRARY})
+endif (HAVE_LZ4 OR HAVE_LZ4HC)
 
-if (ENABLE_SNAPPY)
-    if (SNAPPY_FOUND)
-        include_directories( ${SNAPPY_INCLUDE_DIR} )
-        set(LIBS ${LIBS} ${SNAPPY_LIBRARY})
-    else(SNAPPY_FOUND)
-        set(SNAPPY_LOCAL_DIR ${INTERNAL_LIBS}/snappy-1.1.1)
-        include_directories( ${SNAPPY_LOCAL_DIR} )
-        set(SOURCES ${SOURCES}
-            ${SNAPPY_LOCAL_DIR}/snappy.cc
-            ${SNAPPY_LOCAL_DIR}/snappy-c.cc
-            ${SNAPPY_LOCAL_DIR}/snappy-sinksource.cc
-            ${SNAPPY_LOCAL_DIR}/snappy-stubs-internal.cc
-            )
-    endif(SNAPPY_FOUND)
-endif (ENABLE_SNAPPY)
+if (HAVE_SNAPPY)
+    include_directories( ${SNAPPY_INCLUDE_DIR} )
+    set(LIBS ${LIBS} ${SNAPPY_LIBRARY})
+endif (HAVE_SNAPPY)
 
-if (ENABLE_ZLIB)
-    if (ZLIB_FOUND)
-        include_directories( ${ZLIB_INCLUDE_DIR} )
-        set(LIBS ${LIBS} ${ZLIB_LIBRARY})
-    else(ZLIB_FOUND)
-        set(ZLIB_LOCAL_DIR ${INTERNAL_LIBS}/zlib-1.2.8)
-        include_directories( ${ZLIB_LOCAL_DIR} )
-        set(SOURCES ${SOURCES}
-            ${ZLIB_LOCAL_DIR}/adler32.c
-            ${ZLIB_LOCAL_DIR}/compress.c
-            ${ZLIB_LOCAL_DIR}/crc32.c
-            ${ZLIB_LOCAL_DIR}/deflate.c
-            ${ZLIB_LOCAL_DIR}/gzclose.c
-            ${ZLIB_LOCAL_DIR}/gzlib.c
-            ${ZLIB_LOCAL_DIR}/gzread.c
-            ${ZLIB_LOCAL_DIR}/gzwrite.c
-            ${ZLIB_LOCAL_DIR}/infback.c
-            ${ZLIB_LOCAL_DIR}/inffast.c
-            ${ZLIB_LOCAL_DIR}/inflate.c
-            ${ZLIB_LOCAL_DIR}/inftrees.c
-            ${ZLIB_LOCAL_DIR}/trees.c
-            ${ZLIB_LOCAL_DIR}/uncompr.c
-            ${ZLIB_LOCAL_DIR}/zutil.c
-        )
-    endif(ZLIB_FOUND)
-endif (ENABLE_ZLIB)
+if (HAVE_ZLIB)
+    include_directories( ${ZLIB_INCLUDE_DIR} )
+    set(LIBS ${LIBS} ${ZLIB_LIBRARY})
+endif (HAVE_ZLIB)
 
 
 # targets

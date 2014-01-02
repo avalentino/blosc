@@ -11,5 +11,5 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(LZ4
 if(LZ4_FOUND)
     message(STATUS "Found LZ4 library: ${LZ4_INCLUDE_DIR} ${LZ4_LIBRARY}")
 else ()
-    message(STATUS "No lz4 found.  Using internal sources.")
+    message(STATUS "No lz4 found.")
 endif ()

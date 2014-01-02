@@ -11,5 +11,5 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(SNAPPY
 if(SNAPPY_FOUND)
     message(STATUS "Found SNAPPY library: ${SNAPPY_INCLUDE_DIR} ${SNAPPY_LIBRARY}")
 else ()
-    message(STATUS "No snappy found.  Using internal sources.")
+    message(STATUS "No snappy found.")
 endif ()

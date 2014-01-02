@@ -93,35 +93,32 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 if(ENABLE_LZ4)
     find_package(LZ4)
-    # HAVE_LZ4 will be set to true because even if the library is
-    # not found, we will use the included sources for it
-    set(HAVE_LZ4 TRUE)
+    if(LZ4_FOUND)
+        set(HAVE_LZ4 TRUE)
+    endif(LZ4_FOUND)
 endif(ENABLE_LZ4)
 
 if(ENABLE_LZ4HC)
     find_package(LZ4)
-    # HAVE_LZ4HC will be set to true because even if the library is
-    # not found, we will use the included sources for it
-    set(HAVE_LZ4HC TRUE)
+    if(LZ4_FOUND)
+        set(HAVE_LZ4HC TRUE)
+    endif(LZ4_FOUND)
 endif(ENABLE_LZ4HC)
 
 if(ENABLE_SNAPPY)
     find_package(Snappy)
-    # HAVE_SNAPPY will be set to true because even if the library is not found,
-    # we will use the included sources for it
-    set(HAVE_SNAPPY TRUE)
+    if(SNAPPY_FOUND)
+        set(HAVE_SNAPPY TRUE)
+    endif(SNAPPY_FOUND)
 endif(ENABLE_SNAPPY)
 
 if(ENABLE_ZLIB)
     # import the ZLIB_ROOT environment variable to help finding the zlib library
     set(ZLIB_ROOT $ENV{ZLIB_ROOT})
     find_package( ZLIB )
-    if (NOT ZLIB_FOUND )
-        message(STATUS "No zlib found.  Using internal sources.")
-    endif (NOT ZLIB_FOUND )
-    # HAVE_ZLIB will be set to true because even if the library is not found,
-    # we will use the included sources for it
-    set(HAVE_ZLIB TRUE)
+    if ( ZLIB_FOUND )
+        set(HAVE_ZLIB TRUE)
+    endif ( ZLIB_FOUND )
 endif(ENABLE_ZLIB)
 
 # create the config.h file

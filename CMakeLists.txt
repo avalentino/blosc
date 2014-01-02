@@ -11,6 +11,14 @@
 #       build test programs and generates the "test" target
 #   BUILD_BENCHMARKS: default ON
 #       build the benchmark program
+#   ENABLE_LZ4: default ON
+#       enable the Lz4 compressor
+#   ENABLE_LZ4HC: default ON
+#       enable the Lz4 compressor
+#   ENABLE_SNAPPY: default ON
+#       enable the Snappy compressor
+#   ENABLE_ZLIB: default ON
+#       enable the zlib compressor
 #   TEST_INCLUDE_BENCH_SINGLE_1: default ON
 #       add a test that runs the benchmark program passing "single" with
 #       1 thread as first parameter
@@ -76,28 +84,45 @@ option(BUILD_TESTS
 option(BUILD_BENCHMARKS
     "Build benchmark programs form the blosc compression library" ON)
 
+option(ENABLE_LZ4 "Enable the Lz4 compressor." ON)
+option(ENABLE_LZ4HC "Enable the Lz4HC compressor." ON)
+option(ENABLE_SNAPPY "Enable the Snappy compressor." ON)
+option(ENABLE_ZLIB "Enable the zlib compressor." ON)
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(LZ4)
-# HAVE_LZ4, HAVE_LZ4HC will be set to true because even if the library is
-# not found, we will use the included sources for it
-set(HAVE_LZ4 TRUE)
-set(HAVE_LZ4HC TRUE)
+if(ENABLE_LZ4)
+    find_package(LZ4)
+    # HAVE_LZ4 will be set to true because even if the library is
+    # not found, we will use the included sources for it
+    set(HAVE_LZ4 TRUE)
+endif(ENABLE_LZ4)
 
-find_package(Snappy)
-# HAVE_SNAPPY will be set to true because even if the library is not found,
-# we will use the included sources for it
-set(HAVE_SNAPPY TRUE)
+if(ENABLE_LZ4HC)
+    find_package(LZ4)
+    # HAVE_LZ4HC will be set to true because even if the library is
+    # not found, we will use the included sources for it
+    set(HAVE_LZ4HC TRUE)
+endif(ENABLE_LZ4HC)
 
-# import the ZLIB_ROOT environment variable to help finding the zlib library
-set(ZLIB_ROOT $ENV{ZLIB_ROOT})
-find_package( ZLIB )
-if (NOT ZLIB_FOUND )
-    message(STATUS "No zlib found.  Using internal sources.")
-endif (NOT ZLIB_FOUND )
-# HAVE_ZLIB will be set to true because even if the library is not found,
-# we will use the included sources for it
-set(HAVE_ZLIB TRUE)
+if(ENABLE_SNAPPY)
+    find_package(Snappy)
+    # HAVE_SNAPPY will be set to true because even if the library is not found,
+    # we will use the included sources for it
+    set(HAVE_SNAPPY TRUE)
+endif(ENABLE_SNAPPY)
+
+if(ENABLE_ZLIB)
+    # import the ZLIB_ROOT environment variable to help finding the zlib library
+    set(ZLIB_ROOT $ENV{ZLIB_ROOT})
+    find_package( ZLIB )
+    if (NOT ZLIB_FOUND )
+        message(STATUS "No zlib found.  Using internal sources.")
+    endif (NOT ZLIB_FOUND )
+    # HAVE_ZLIB will be set to true because even if the library is not found,
+    # we will use the included sources for it
+    set(HAVE_ZLIB TRUE)
+endif(ENABLE_ZLIB)
 
 # create the config.h file
 configure_file ("blosc/config.h.in"  "blosc/config.h" )

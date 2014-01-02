@@ -12,11 +12,11 @@
 #   BUILD_BENCHMARKS: default ON
 #       build the benchmark program
 #   TEST_INCLUDE_BENCH_SINGLE_1: default ON
-#       add a test that runs the benchmark program passing "single" with 1 thread
-#       as first parameter
+#       add a test that runs the benchmark program passing "single" with
+#       1 thread as first parameter
 #   TEST_INCLUDE_BENCH_SINGLE_N: default ON
-#       add a test that runs the benchmark program passing "single" with all threads
-#       as first parameter
+#       add a test that runs the benchmark program passing "single" with
+#       all threads as first parameter
 #   TEST_INCLUDE_BENCH_SUITE: default OFF
 #       add a test that runs the benchmark program passing "suite"
 #       as first parameter
@@ -54,7 +54,8 @@ string(REGEX REPLACE ".*#define[ \t]+BLOSC_VERSION_MINOR[ \t]+([0-9]+).*"
     "\\1" BLOSC_VERSION_MINOR ${_blosc_h_contents})
 string(REGEX REPLACE ".*#define[ \t]+BLOSC_VERSION_RELEASE[ \t]+([0-9]+).*"
     "\\1" BLOSC_VERSION_PATCH ${_blosc_h_contents})
-string(REGEX REPLACE ".*#define[ \t]+BLOSC_VERSION_STRING[ \t]+\"([-0-9A-Za-z.]+)\".*"
+string(REGEX REPLACE
+    ".*#define[ \t]+BLOSC_VERSION_STRING[ \t]+\"([-0-9A-Za-z.]+)\".*"
     "\\1" BLOSC_VERSION_STRING ${_blosc_h_contents})
 
 message("Configuring for Blosc version: " ${BLOSC_VERSION_STRING})
@@ -94,7 +95,8 @@ set(HAVE_ZLIB TRUE)
 
 # create the config.h file
 configure_file ("blosc/config.h.in"  "blosc/config.h" )
-# now make sure that you set the build directory on your "Include" path when compiling
+# now make sure that you set the build directory on your "Include" path
+# when compiling
 include_directories("${PROJECT_BINARY_DIR}/blosc/")
 
 # force the default build type to Release.
@@ -153,7 +155,8 @@ configure_file(
     IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+    COMMAND ${CMAKE_COMMAND}
+        -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
 
 # packaging
@@ -168,7 +171,8 @@ set(CPACK_PACKAGE_VERSION ${BLOSC_STRING_VERSION})
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.rst")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "A blocking, shuffling and lossless compression library")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/BLOSC.txt")
+set(CPACK_RESOURCE_FILE_LICENSE
+    "${CMAKE_CURRENT_SOURCE_DIR}/LICENSES/BLOSC.txt")
 set(CPACK_SOURCE_IGNORE_FILES "/build.*;.*~;\\\\.git.*;\\\\.DS_Store")
 set(CPACK_STRIP_FILES TRUE)
 set(CPACK_SOURCE_STRIP_FILES TRUE)

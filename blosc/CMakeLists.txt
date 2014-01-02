@@ -29,7 +29,8 @@ endif(ZLIB_FOUND)
 set(SOURCES blosc.c blosclz.c shuffle.c)
 # library install directory
 set(lib_dir lib${LIB_SUFFIX})
-set(version_string ${BLOSC_VERSION_MAJOR}.${BLOSC_VERSION_MINOR}.${BLOSC_VERSION_PATCH})
+set(version_string
+    ${BLOSC_VERSION_MAJOR}.${BLOSC_VERSION_MINOR}.${BLOSC_VERSION_PATCH})
 
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 if(WIN32)
@@ -94,9 +95,9 @@ endif(ZLIB_FOUND)
 add_library(blosc_shared SHARED ${SOURCES})
 set_target_properties(blosc_shared PROPERTIES OUTPUT_NAME blosc)
 set_target_properties(blosc_shared PROPERTIES
-        VERSION ${version_string}
-        SOVERSION ${version_string}
-    )
+    VERSION ${version_string}
+    SOVERSION ${version_string}
+)
 target_link_libraries(blosc_shared ${LIBS})
 
 if(BUILD_STATIC)

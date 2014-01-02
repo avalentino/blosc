@@ -58,7 +58,7 @@ string(REGEX REPLACE
     ".*#define[ \t]+BLOSC_VERSION_STRING[ \t]+\"([-0-9A-Za-z.]+)\".*"
     "\\1" BLOSC_VERSION_STRING ${_blosc_h_contents})
 
-message("Configuring for Blosc version: " ${BLOSC_VERSION_STRING})
+message(STATUS "Configuring for Blosc version: " ${BLOSC_VERSION_STRING})
 
 # options
 option(BUILD_STATIC

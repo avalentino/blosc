@@ -60,7 +60,7 @@
 # following commands have to be run:
 #
 #   $ cmake <PATH_TO_SOURCES>
-#   $ make Snappy-download Lz4-download
+#   $ make Snappy-download Lz4-download ZLib-download
 #   $ make package_source
 
 
@@ -129,10 +129,20 @@ if(ENABLE_SNAPPY)
 endif(ENABLE_SNAPPY)
 
 if(ENABLE_ZLIB)
-    # import the ZLIB_ROOT environment variable to help finding the zlib library
-    set(ZLIB_ROOT $ENV{ZLIB_ROOT})
+    # import the ZLIB_ROOT environment variable to help finding the zlib
+    # library
+    if(NOT ${ZLIB_ROOT})
+        set(ZLIB_ROOT $ENV{ZLIB_ROOT})
+        if(${ZLIB_ROOT})
+            message(STATUS "Set ZLIB_ROOT from environment: '${ZLIB_ROOT}'")
+        endif(${ZLIB_ROOT})
+    endif(NOT ${ZLIB_ROOT})
 
     find_package( ZLIB )
+
+    if(NOT ZLIB_FOUND)
+        include(ZLibExternalProject)
+    endif(NOT ZLIB_FOUND)
 
     if ( ZLIB_FOUND )
         set(HAVE_ZLIB TRUE)
